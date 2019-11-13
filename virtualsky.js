@@ -53,6 +53,7 @@
 		fontsize - set the font size in pixels if you want to over-ride the auto sizing
 		fontfamily - set the font family using a CSS style font-family string otherwise it inherits from the container element
 		objects - a semi-colon-separated string of recognized object names to display e.g. "M1;M42;Horsehead Nebula" (requires internet connection)
+                datelocale - set the locale of date and time string.
 */
 (function (S) {
 
@@ -271,6 +272,7 @@ function VirtualSky(input){
 	this.showdate = true;				// Display the current date
 	this.showposition = true;			// Display the longitude/latitude
 	this.scalestars = 1;				// A scale factor by which to increase the star sizes
+	this.datelocale = null;
 	this.ground = false;
 	this.grid = { az: false, eq: false, gal: false, step: 30 };	// Display grids
 	this.gal = { 'processed':false, 'lineWidth':0.75 };
@@ -1028,7 +1030,8 @@ VirtualSky.prototype.init = function(d){
 		credit: b,
 		transparent: b,
 		plugins: o,
-		lang: s
+		lang: s,
+		datelocale: s
 	};
 	for(key in pairs)
 		if(is(d[key], pairs[key]))
@@ -2343,7 +2346,10 @@ VirtualSky.prototype.drawImmediate = function(proj){
 
 	// Time line
 	if(this.showdate){
-		clockstring = this.clock.toDateString()+' '+this.clock.toLocaleTimeString();
+		var datestring = this.datelocale
+				? this.clock.toLocaleDateString(this.datelocale)
+				: this.clock.toDateString();
+		clockstring = datestring+' '+this.clock.toLocaleTimeString();
 		metric_clock = this.drawText(clockstring,this.padding,this.padding+fontsize);
 	}
 
