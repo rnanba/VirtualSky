@@ -463,7 +463,8 @@
 				if(oReq.responseType=="" || oReq.responseType=="text") rsp = oReq.responseText;
 				if(attrs.dataType=="json"){
 					try {
-						if(typeof rsp==="string") rsp = JSON.parse(rsp.replace(/[\n\r]/g,"\\n").replace(/^([^\(]+)\((.*)\)([^\)]*)$/,function(e,a,b,c){ return (a==cb) ? b:''; }).replace(/\\n/g,"\n"));
+						//if(typeof rsp==="string") rsp = JSON.parse(rsp.replace(/[\n\r]/g,"\\n").replace(/^([^\(]+)\((.*)\)([^\)]*)$/,function(e,a,b,c){ return (a==cb) ? b:''; }).replace(/\\n/g,"\n"));
+						if(typeof rsp==="string") rsp = JSON.parse(rsp);
 					} catch(e){ error(e); }
 				}
 
